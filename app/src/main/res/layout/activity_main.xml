@@ -12,14 +12,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"></LinearLayout>
+        tools:layout_editor_absoluteY="8dp">
 
-    <Button
-        android:id="@+id/button"
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:onClick="LoginBasic"
+            android:text="Ingresar"
+            tools:layout_editor_absoluteX="114dp"
+            tools:layout_editor_absoluteY="189dp" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingresar"
-        android:onClick="LoginBasic"
         tools:layout_editor_absoluteX="114dp"
-        tools:layout_editor_absoluteY="189dp" />
+        tools:layout_editor_absoluteY="189dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
