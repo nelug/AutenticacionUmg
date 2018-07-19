@@ -6,14 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.facebook.Profile;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class Registrarse extends AppCompatActivity {
 
@@ -36,30 +35,37 @@ public class Registrarse extends AppCompatActivity {
     }
 
     private void GuardarUsuario(){
+    try
+    {
+        Map<String, Object> usuario = new HashMap<>();
+        usuario.put("id", correo.getText()+ "");
+        usuario.put("apellido", apellido.getText()+"");
+        usuario.put("nombre", nombre.getText()+"");
+        usuario.put("nombre_completo", nombre.getText() + " " + apellido.getText());
+        usuario.put("red", "Firebase");
+        usuario.put("token_cloud_message", FirebaseCloudMessage.getToken());
 
-            Map<String, Object> usuario = new HashMap<>();
-            usuario.put("id", correo.getText());
-            usuario.put("apellido", apellido.getText());
-            usuario.put("nombre", nombre.getText());
-            usuario.put("nombre_completo", nombre.getText() + " " + apellido.getText());
-            usuario.put("red", "Firebase");
-            usuario.put("token_cloud_message", FirebaseCloudMessage.getToken());
 
+        db.collection("usuarios").document(correo.getText().toString())
+                .set(usuario)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(Registrarse.this, "Datos Guardados con exito", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Registrarse.this, "No se pudieron guardar los datos", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-            db.collection("usuarios").document(correo.getText().toString())
-                    .set(usuario)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(Registrarse.this, "Datos Guardados con exito", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Registrarse.this, "No se pudieron guardar los datos", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+    }
+    catch (Exception ex)
+    {
+
+    }
 
     }
 }

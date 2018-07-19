@@ -14,6 +14,10 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="20dp"/>
         <EditText
             android:id="@+id/txtCorreo"
             android:layout_width="match_parent"
@@ -21,6 +25,10 @@
             android:ems="10"
             android:hint="Correo"
             android:inputType="textEmailAddress" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="20dp"/>
 
         <EditText
             android:id="@+id/txtNombre"
@@ -29,6 +37,10 @@
             android:ems="10"
             android:hint="Nombre"
             android:inputType="textPersonName" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="20dp"/>
 
         <EditText
             android:id="@+id/txtApellido"
@@ -37,6 +49,10 @@
             android:ems="10"
             android:hint="Apellido"
             android:inputType="textPersonName" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="20dp"/>
 
         <EditText
             android:id="@+id/txtPassword"
@@ -45,6 +61,10 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="20dp"/>
 
         <Button
             android:id="@+id/button3"
