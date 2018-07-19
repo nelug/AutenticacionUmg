@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             usuario.put("nombre", profile.getFirstName());
             usuario.put("nombre_completo", profile.getName());
             usuario.put("red", "Facebook");
+            usuario.put("token_cloud_message", FirebaseCloudMessage.getToken());
 
 
             db.collection("usuarios").document("fb" + profile.getId())

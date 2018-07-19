@@ -7,6 +7,8 @@ import com.facebook.Profile;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,7 @@ public class PrincipalActivity extends AppCompatActivity {
             usuario.put("nombre", profile.getFirstName());
             usuario.put("nombre_completo", profile.getName());
             usuario.put("red", "Facebook");
+            usuario.put("token_cloud_message", FirebaseCloudMessage.getToken());
 
 
             db.collection("usuarios").document("fb" + profile.getId())
