@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css" />
+
+</head>
+
+<body>
+  <div id="usuariosList">
+    <div class="collection">
+      <a href="#showInfo" v-for="user in listaUsuarios" v-on:click="getInfo(user.fields)" class="collection-item">
+        <span class="badge"> {{ user.fields.red.stringValue }} </span>
+        {{ user.fields.nombre_completo.stringValue }}
+      </a>
+    </div>
+
+    <div id="showInfo" class="modal bottom-sheet">
+      <div class="modal-content">
+        <h4> {{ userInfo.nombre_completo }} </h4>
+        <ul class="collection">
+          <li class="collection-item avatar">
+            <img v-bind:src="'http://graph.facebook.com/'+userInfo.id+'/picture?type=large'" alt="" class="circle">
+            <span class="title">Autenticacion</span>
+            <p> {{ userInfo.red }}
+              <br> Id: {{ userInfo.id }}
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
