@@ -1,20 +1,26 @@
 package cursos.mai.umg.gt.autenticacionumg;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.widget.ListView;
+
 import com.facebook.Profile;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PrincipalActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private List<String> userList = new ArrayList<>();
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +28,11 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
         setTitle("Menu Principal | MAESTRIA UMG");
 
-        guardar();
+        guardarFacebook();
 
     }
 
-    private void  guardar(){
+    private void  guardarFacebook(){
         Profile profile = Profile.getCurrentProfile();
 
         if (profile != null) {
