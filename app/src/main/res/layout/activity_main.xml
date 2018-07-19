@@ -54,6 +54,15 @@
             tools:layout_editor_absoluteX="114dp"
             tools:layout_editor_absoluteY="189dp" />
 
+        <Button
+            android:id="@+id/btnRegistrarse"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:onClick="Registrarse"
+            android:text="Registrate"
+            tools:layout_editor_absoluteX="114dp"
+            tools:layout_editor_absoluteY="189dp" />
+
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="match_parent"
