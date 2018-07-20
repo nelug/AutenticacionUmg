@@ -76,8 +76,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(principal);
     }
 
+    private  void mostrarRegistrarse(){
+        Intent registro;
+        registro = new Intent(this, Registrarse.class);
+        startActivity(registro);
+    }
+
+
     public void LoginBasic(View view) {
         mostrarPrincipal();
+    }
+
+    public void Registrarse(View view){
+        mostrarRegistrarse();
     }
 
 
