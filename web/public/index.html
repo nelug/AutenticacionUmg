@@ -22,7 +22,7 @@
         <h4> {{ userInfo.nombre_completo }} </h4>
         <ul class="collection">
           <li class="collection-item avatar">
-            <img v-bind:src="'https://graph.facebook.com/'+userInfo.id+'/picture?type=large'" alt="" class="circle">
+            <img v-bind:src="(userInfo.red == 'Facebook')?'https://graph.facebook.com/'+userInfo.id+'/picture?type=large':'./img/Firebase.png'" alt="" class="circle">
             <span class="title">Autenticacion</span>
             <p> {{ userInfo.red }}
               <br> Id: {{ userInfo.id }}
