@@ -11,6 +11,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -48,6 +50,7 @@ public class Registrarse extends AppCompatActivity {
         usuario.put("nombre_completo", nombre.getText() + " " + apellido.getText());
         usuario.put("red", "Firebase");
         usuario.put("token_cloud_message", FirebaseCloudMessage.getToken());
+        usuario.put("password", md5(password.getText().toString()));
 
 
         db.collection("usuarios").document(correo.getText().toString())
@@ -79,6 +82,31 @@ public class Registrarse extends AppCompatActivity {
         Intent principal;
         principal = new Intent(this, MainActivity.class);
         startActivity(principal);
+    }
+
+    public static final String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
 

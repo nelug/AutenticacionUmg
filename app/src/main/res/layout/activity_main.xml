@@ -33,7 +33,7 @@
             android:minHeight="20dp"/>
 
         <EditText
-            android:id="@+id/txtPassword"
+            android:id="@+id/txtPasswordMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -52,7 +52,8 @@
             android:onClick="LoginBasic"
             android:text="Ingresar"
             tools:layout_editor_absoluteX="114dp"
-            tools:layout_editor_absoluteY="189dp" />
+            tools:layout_editor_absoluteY="189dp"
+            />
 
         <Button
             android:id="@+id/btnRegistrarse"

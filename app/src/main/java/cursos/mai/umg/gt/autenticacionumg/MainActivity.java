@@ -3,8 +3,13 @@ package cursos.mai.umg.gt.autenticacionumg;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -16,8 +21,14 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,12 +39,15 @@ public class MainActivity extends AppCompatActivity {
     LoginButton loginButton;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     SessionManager session;
+    EditText correoElectronico;
+    EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        correoElectronico = (EditText) findViewById(R.id.txtUsuario);
+        password = (EditText) findViewById(R.id.txtPasswordMain);
         session = new SessionManager(this);
 
         if(session.isLoggedIn()){
@@ -48,6 +62,36 @@ public class MainActivity extends AppCompatActivity {
         }
 
         loginFacebook();
+    }
+
+    private void ComprobarRegistro(String correo){
+        final DocumentReference docRef = db.collection("usuarios").document(correo.toString());
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    showCredencialesInvalidas();
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    String pass = (String) snapshot.getData().get("password");
+
+                    if(pass.equals(md5(password.getText().toString()))){
+                        mostrarPrincipal();
+                    }
+
+                    showCredencialesInvalidas();
+                } else {
+                    showCredencialesInvalidas();
+                }
+            }
+        });
+    }
+
+    private  void showCredencialesInvalidas(){
+        Toast.makeText(this, "Credenciales Invalidas", Toast.LENGTH_SHORT).show();
     }
 
     private  void loginFacebook() {
@@ -91,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void LoginBasic(View view) {
-        mostrarPrincipal();
+        ComprobarRegistro(correoElectronico.getText().toString());
     }
 
     public void Registrarse(View view){
@@ -128,5 +172,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mostrarPrincipal();
+    }
+
+    public static final String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
