@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
                     if(pass.equals(md5(password.getText().toString()))){
                         mostrarPrincipal();
+                    }else {
+                        showCredencialesInvalidas();
                     }
-
-                    showCredencialesInvalidas();
                 } else {
                     showCredencialesInvalidas();
                 }

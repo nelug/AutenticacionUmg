@@ -1,12 +1,16 @@
 package cursos.mai.umg.gt.autenticacionumg;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ListView;
 
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,7 +24,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private List<String> userList = new ArrayList<>();
-
+    SessionManager session;
     WebView webView;
 
     @Override
@@ -28,7 +32,7 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         setTitle("Menu Principal | MAESTRIA UMG");
-
+        session = new SessionManager(this);
         guardarFacebook();
 
         webView = (WebView) findViewById(R.id.webView);
@@ -38,6 +42,25 @@ public class PrincipalActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
+    }
+
+    @SuppressLint("ResourceType")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.layout.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            session.logoutUser();
+            LoginManager.getInstance().logOut();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void  guardarFacebook(){

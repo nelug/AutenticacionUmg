@@ -2,4 +2,6 @@
     <string name="app_name">AutenticacionUmg</string>
     <string name="facebook_app_id">258204231650521</string>
     <string name="fb_login_protocol_scheme">fb258204231650521</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="action_settings">Cerrar Sesion</string>
 </resources>
