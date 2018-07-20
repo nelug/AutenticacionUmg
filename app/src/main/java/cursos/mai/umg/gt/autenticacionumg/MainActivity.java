@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (profile != null) {
             Map<String, Object> usuario = new HashMap<>();
+
             usuario.put("id", profile.getId());
             usuario.put("apellido", profile.getLastName());
             usuario.put("nombre", profile.getFirstName());

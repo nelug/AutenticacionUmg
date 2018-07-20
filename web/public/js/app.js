@@ -28,8 +28,15 @@ var app = new Vue({
 
 });
 
-$.get( "https://firestore.googleapis.com/v1beta1/projects/appmoviles-89341/databases/(default)/documents/usuarios", 
-function( data ) {
-    app.listaUsuarios = data.documents; 
-});
+function updateData(){
+    $.get( "https://firestore.googleapis.com/v1beta1/projects/appmoviles-89341/databases/(default)/documents/usuarios", 
+    function( data ) {
+        app.listaUsuarios = data.documents; 
+    });
+
+    setTimeout(function(){ updateData(); }, 10000);
+}
+
+
+updateData();
 

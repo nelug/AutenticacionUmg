@@ -3,6 +3,7 @@ package cursos.mai.umg.gt.autenticacionumg;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.webkit.WebView;
 import android.widget.ListView;
 
 import com.facebook.Profile;
@@ -20,7 +21,7 @@ public class PrincipalActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private List<String> userList = new ArrayList<>();
 
-    ListView listView;
+    WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,13 @@ public class PrincipalActivity extends AppCompatActivity {
         setTitle("Menu Principal | MAESTRIA UMG");
 
         guardarFacebook();
+
+        webView = (WebView) findViewById(R.id.webView);
+        webView.loadUrl("https://appmoviles-89341.firebaseapp.com");
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
     }
 
