@@ -27,11 +27,18 @@ public class MainActivity extends AppCompatActivity {
     CallbackManager callbackManager;
     LoginButton loginButton;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        session = new SessionManager(this);
+
+        if(session.isLoggedIn()){
+            mostrarPrincipal();
+        }
 
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();

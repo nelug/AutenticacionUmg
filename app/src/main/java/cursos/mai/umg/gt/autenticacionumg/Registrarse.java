@@ -1,5 +1,6 @@
 package cursos.mai.umg.gt.autenticacionumg;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,11 +19,14 @@ public class Registrarse extends AppCompatActivity {
 
     EditText correo,nombre,apellido,password;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrarse);
         setTitle("Registra tus datos");
+        session = new SessionManager(this);
 
         correo = (EditText) findViewById(R.id.txtCorreo);
         nombre = (EditText) findViewById(R.id.txtNombre);
@@ -51,7 +55,9 @@ public class Registrarse extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        session.createLoginSession(nombre.getText().toString(), correo.getText().toString() );
                         Toast.makeText(Registrarse.this, "Datos Guardados con exito", Toast.LENGTH_SHORT).show();
+                        mostrarMain();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -68,4 +74,12 @@ public class Registrarse extends AppCompatActivity {
     }
 
     }
+
+    private  void  mostrarMain(){
+        Intent principal;
+        principal = new Intent(this, MainActivity.class);
+        startActivity(principal);
+    }
 }
+
+
